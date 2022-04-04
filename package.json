@@ -6,6 +6,10 @@
   "author": "Alexandro T. Netto <alex.t.netto@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "hardhat": "^2.9.2"
+    "hardhat": "^2.9.2",
+    "solhint": "^3.3.7"
+  },
+  "scripts": {
+    "lint": "npx solhint -f table contracts/**/*.sol"
   }
 }
