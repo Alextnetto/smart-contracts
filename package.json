@@ -1,0 +1,11 @@
+{
+  "name": "smart-contracts",
+  "version": "1.0.0",
+  "description": "Explanation and sample of diverse Smart Contracts",
+  "repository": "git@github.com:Alextnetto/smart-contracts.git",
+  "author": "Alexandro T. Netto <alex.t.netto@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "hardhat": "^2.9.2"
+  }
+}
