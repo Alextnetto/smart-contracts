@@ -5,22 +5,22 @@ import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract DutchAuction {
-    uint private constant DURATION = 7 days;
+    uint256 private constant DURATION = 7 days;
 
     IERC721 public immutable nft;
-    uint public immutable nftId;
+    uint256 public immutable nftId;
 
     address payable public immutable seller;
-    uint public immutable startingPrice;
-    uint public immutable startAt;
-    uint public immutable expiresAt;
-    uint public immutable discountRate;
+    uint256 public immutable startingPrice;
+    uint256 public immutable startAt;
+    uint256 public immutable expiresAt;
+    uint256 public immutable discountRate;
 
     constructor(
-        uint _startingPrice,
-        uint _discountRate,
+        uint256 _startingPrice,
+        uint256 _discountRate,
         address _nft,
-        uint _nftId
+        uint256 _nftId
     ) {
         seller = payable(msg.sender);
         startingPrice = _startingPrice;
@@ -34,20 +34,20 @@ contract DutchAuction {
         nftId = _nftId;
     }
 
-    function getPrice() public view returns (uint) {
-        uint timeElapsed = block.timestamp - startAt;
-        uint discount = discountRate * timeElapsed;
+    function getPrice() public view returns (uint256) {
+        uint256 timeElapsed = block.timestamp - startAt;
+        uint256 discount = discountRate * timeElapsed;
         return startingPrice - discount;
     }
 
     function buy() external payable {
         require(block.timestamp < expiresAt, "auction expired");
 
-        uint price = getPrice();
+        uint256 price = getPrice();
         require(msg.value >= price, "ETH < price");
 
         nft.transferFrom(seller, msg.sender, nftId);
-        uint refund = msg.value - price;
+        uint256 refund = msg.value - price;
         if (refund > 0) {
             payable(msg.sender).transfer(refund);
         }

@@ -7,10 +7,18 @@
   "license": "MIT",
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
-    "hardhat": "^2.9.2",
-    "solhint": "^3.3.7"
+    "hardhat": "^2.9.2"
   },
   "scripts": {
-    "lint": "npx solhint -f table contracts/**/*.sol"
+    "lint": "npx solhint -f table contracts/**/*.sol",
+    "prettier:fix": "./node_modules/.bin/prettier --write contracts/**/*.sol",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "husky": "^7.0.4",
+    "solhint": "^3.3.7",
+    "prettier": "^2.6.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.19",
+    "solhint-plugin-prettier": "^0.0.5"
   }
 }
