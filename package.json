@@ -8,9 +8,10 @@
   "dependencies": {},
   "scripts": {
     "lint": "npx solhint -f table contracts/**/*.sol --fix && npx prettier '**/*.{json,sol,md}' --write",
-    "test": "REPORT_GAS=true npx hardhat test",
+    "test": "npx hardhat test",
+    "test:gas-report": "REPORT_GAS=true npx hardhat test",
     "coverage": "npx hardhat coverage",
-    "prepare": "husky install"
+    "postinstall": "husky install && typechain"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
