@@ -1,6 +1,5 @@
 node_modules
-coverage
-docs
-modules
-public
-build
+artifacts
+cache
+coverage*
+gasReporterOutput.json

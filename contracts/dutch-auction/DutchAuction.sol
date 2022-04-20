@@ -28,7 +28,10 @@ contract DutchAuction {
         expiresAt = block.timestamp + DURATION;
         discountRate = _discountRate;
 
-        require(_startingPrice >= _discountRate * DURATION, "starting price < min");
+        require(
+            _startingPrice >= _discountRate * DURATION,
+            "starting price < min"
+        );
 
         nft = IERC721(_nft);
         nftId = _nftId;
