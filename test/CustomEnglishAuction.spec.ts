@@ -1,6 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
+// eslint-disable-next-line node/no-missing-import
 import { CustomEnglishAuction } from "../typechain/CustomEnglishAuction";
 
 describe("CustomEnglishAuction", function () {
@@ -10,6 +11,7 @@ describe("CustomEnglishAuction", function () {
   let hacker: SignerWithAddress;
 
   const startingPrice = 100;
+  const tokenId = 1;
 
   beforeEach(async () => {
     const MyNFT = await ethers.getContractFactory("MyNFT");
@@ -21,7 +23,11 @@ describe("CustomEnglishAuction", function () {
       "CustomEnglishAuction"
     );
 
-    auction = await CustomEnglishAuction.deploy(nft.address, 1, startingPrice);
+    auction = await CustomEnglishAuction.deploy(
+      nft.address,
+      tokenId,
+      startingPrice
+    );
     await auction.deployed();
   });
 
@@ -35,9 +41,12 @@ describe("CustomEnglishAuction", function () {
     );
   });
 
-  it("Should only owner of contract call startAuction", async function () {
-    await expect(auction.connect(owner).startAuction()).to.revertedWith(
-      "Not the owner of the auction"
+  it("Should revert if address provided in contructor not a contract", async function () {
+    const CustomEnglishAuction = await ethers.getContractFactory(
+      "CustomEnglishAuction"
     );
+    await expect(
+      CustomEnglishAuction.deploy(bidder.address, tokenId, startingPrice)
+    ).to.revertedWith("Address is not a contract");
   });
 });

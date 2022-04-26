@@ -3,6 +3,7 @@ pragma solidity 0.8.13;
 
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 contract CustomEnglishAuction {
     address private owner;
@@ -30,6 +31,7 @@ contract CustomEnglishAuction {
         uint256 _nftId,
         uint256 _startingPrice
     ) {
+        require(Address.isContract(_nft), "Address is not a contract");
         owner = msg.sender;
         nft = IERC721(_nft);
         nftId = _nftId;
