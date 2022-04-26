@@ -1,11 +1,13 @@
+/* eslint-disable node/no-missing-import */
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { expect } from "chai";
 import { ethers } from "hardhat";
-// eslint-disable-next-line node/no-missing-import
 import { CustomEnglishAuction } from "../typechain/CustomEnglishAuction";
+import { MyToken } from "../typechain/MyToken";
 
 describe("CustomEnglishAuction", function () {
   let auction: CustomEnglishAuction;
+  let token: MyToken;
   let owner: SignerWithAddress;
   let bidder: SignerWithAddress;
   let hacker: SignerWithAddress;
@@ -29,10 +31,18 @@ describe("CustomEnglishAuction", function () {
       startingPrice
     );
     await auction.deployed();
+
+    const NewToken = await ethers.getContractFactory("MyToken");
+
+    token = await NewToken.deploy();
+
+    await token.deployed();
   });
 
   it("Should highest bid be equal to starting price", async function () {
-    expect(await auction.getHighestBid()).to.equal(startingPrice);
+    expect(await auction.connect(owner).getHighestBid()).to.equal(
+      startingPrice
+    );
   });
 
   it("Should only owner of contract call startAuction", async function () {
