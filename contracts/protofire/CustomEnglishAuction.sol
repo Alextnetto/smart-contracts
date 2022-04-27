@@ -29,16 +29,21 @@ contract CustomEnglishAuction {
     constructor(
         address _nft,
         uint256 _nftId,
+        address _acceptedToken,
         uint256 _startingPrice
     ) {
         require(Address.isContract(_nft), "Address is not a contract");
+        require(
+            Address.isContract(_acceptedToken),
+            "Address is not a contract"
+        );
         owner = msg.sender;
         nft = IERC721(_nft);
         nftId = _nftId;
 
         highestBid = _startingPrice;
-        /// @dev Adding DAI address in Rinkeby
-        addAcceptedToken(0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa);
+        /// @dev DAI address in Rinkeby 0x5592EC0cfb4dbc12D3aB100b257153436a1f0FEa
+        addAcceptedToken(_acceptedToken);
     }
 
     /// @dev Save gas using
@@ -53,6 +58,7 @@ contract CustomEnglishAuction {
 
     /// @dev add new stablecoins tokens
     function addAcceptedToken(address newToken) public onlyOwner {
+        require(Address.isContract(newToken), "Address is not a contract");
         acceptedTokens[newToken] = true;
     }
 
