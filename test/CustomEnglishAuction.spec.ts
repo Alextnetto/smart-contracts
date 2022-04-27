@@ -81,4 +81,9 @@ describe("CustomEnglishAuction", function () {
       startingPrice
     );
   });
+
+  // TODO: Withdraw bid
+  // TODO: finish auction and verify NFT is transferred to bidder
+  // TODO: Bid with a different token
+  // TODO: All requires and modifiers
 });
